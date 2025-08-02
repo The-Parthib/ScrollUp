@@ -1,13 +1,20 @@
-import * as React from 'react';
-import { RouterProvider } from 'react-router-dom';
-import router from './Router/Router';
+import * as React from "react";
+import { RouterProvider } from "react-router-dom";
+import router from "./Router/Router";
+import { ThemeProvider } from "./context/ThemeContext";
+import { AuthContextProvider } from "./context/AuthContext";
+import { ModeToggle } from "./components/ui/mode-toggle";
 
-interface IAppProps {
-}
+interface IAppProps {}
 
 const App: React.FunctionComponent<IAppProps> = (props) => {
   return (
-    <RouterProvider router={router}/>
+    <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
+      <AuthContextProvider>
+        <ModeToggle/>
+        <RouterProvider router={router} />
+      </AuthContextProvider>
+    </ThemeProvider>
   );
 };
 

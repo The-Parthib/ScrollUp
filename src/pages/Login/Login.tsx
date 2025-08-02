@@ -7,24 +7,24 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Icons } from "@/components/ui/icons";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { MagicCard } from "@/components/magicui/magic-card";
+
 import { useUserAuth } from "@/context/AuthContext";
 import type { UserLogIn } from "@/types/types";
 
 import * as React from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { useTheme } from "@/context/ThemeContext";
+import { InteractiveHoverButton } from "@/components/magicui/interactive-hover-button";
 
 interface ILoginProps {}
 
 const initialvalue: UserLogIn = {
   email: "",
-  password: ""
+  password: "",
 };
-
-interface ILoginProps {
-}
 
 const Login: React.FunctionComponent<ILoginProps> = () => {
   const [userLogin, setUserLogin] = React.useState<UserLogIn>(initialvalue);
@@ -32,10 +32,11 @@ const Login: React.FunctionComponent<ILoginProps> = () => {
   const { logIn, googleSignUp } = useUserAuth();
   const navigate = useNavigate();
 
-  const handleSubmit = async (e: React.MouseEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
       await logIn(userLogin.email, userLogin.password);
+      navigate("/");
       console.log(userLogin, " from sign in");
     } catch (error) {
       console.log(error);
@@ -53,77 +54,91 @@ const Login: React.FunctionComponent<ILoginProps> = () => {
     }
   };
 
+  const { theme } = useTheme();
+
   return (
-    <div className="bg-slate-800 w-full h-screen">
-      <div className="container mx-auto p-6 flex h-full">
-        <div className="flex justify-center items-center w-full">
-          <div className="w-2xl rounded-xl border bg-card text-card-foreground shadow-sm">
-            <Card>
+    <div className="min-h-screen flex items-center justify-center p-4 px-4 sm:px-6 lg:px-8">
+      <div className="w-full max-w-sm sm:max-w-md">
+        <Card className="shadow-lg border-0 mx-auto">
+          <MagicCard
+            gradientColor={theme === "dark" ? "#262626" : "#D9D9D955"}
+            className="p-0"
+          >
+            <CardHeader className="border-b border-border p-4 sm:p-6">
+              <CardTitle className="text-xl sm:text-2xl font-bold text-center">
+                Login
+              </CardTitle>
+              <CardDescription className="text-center text-sm sm:text-base">
+                Enter your credentials to access your account
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="p-4 sm:p-6">
               <form onSubmit={handleSubmit}>
-                <CardHeader className="space-y-1">
-                  <CardTitle className="text-4xl font-bold text-blue-600 text-center mb-4">
-                    ScrollUp
-                  </CardTitle>
-                </CardHeader>
-                <CardContent className="grid gap-4">
-                  <div className="grid">
-                    <Button variant="outline" onClick={handleGoogleSignIn}>
-                      <Icons.google className="mr-2 h-4 w-4" />
-                      Sign in using Google
-                    </Button>
-                  </div>
-                  <div className="relative">
-                    <div className="absolute inset-0 flex items-center">
-                      <span className="w-full border-t" />
-                    </div>
-                    <div className="relative flex justify-center text-xs uppercase">
-                      <span className="bg-background px-2 text-muted-foreground">
-                        Or Enter your Credentials below to Log in
-                      </span>
-                    </div>
-                  </div>
+                <div className="grid gap-3 sm:gap-4">
                   <div className="grid gap-2">
-                    <Label htmlFor="email">Email address</Label>
+                    <Label htmlFor="email" className="text-sm">
+                      Email
+                    </Label>
                     <Input
                       id="email"
                       type="email"
-                      placeholder="dipesh@example.com"
+                      placeholder="name@example.com"
                       value={userLogin.email}
-                      onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                      onChange={(e) =>
                         setUserLogin({ ...userLogin, email: e.target.value })
                       }
+                      required
+                      className="h-10 sm:h-11"
                     />
                   </div>
                   <div className="grid gap-2">
-                    <Label htmlFor="password">Password</Label>
+                    <Label htmlFor="password" className="text-sm">
+                      Password
+                    </Label>
                     <Input
                       id="password"
                       type="password"
-                      placeholder="Password"
                       value={userLogin.password}
-                      onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                      onChange={(e) =>
                         setUserLogin({ ...userLogin, password: e.target.value })
                       }
+                      required
+                      className="h-10 sm:h-11"
                     />
                   </div>
-                </CardContent>
-                <CardFooter className="flex flex-col">
-                  <Button className="w-full m-3" type="submit">
-                    Sign in
-                  </Button>
-                  <p className="mt-3 text-sm text-center text-green-500">
-                   Don't have an account ?{" "}
-                    <span className="text-blue-600">
-                      <Link to="/signup">Sign Up</Link>
-                    </span>
-                  </p>
-                </CardFooter>
+                </div>
               </form>
-            </Card>
-          </div>
-        </div>
+            </CardContent>
+            <CardFooter className="p-4 sm:p-6 border-t border-border flex flex-col gap-3">
+              <Button
+                type="submit"
+                className="w-full h-10 sm:h-11 text-sm sm:text-base"
+                onClick={(e) => handleSubmit(e as any)}
+              >
+                Sign In
+              </Button>
+              <div className="relative flex justify-center text-xs uppercase">
+                <span className="px-2 text-muted-foreground">Or</span>
+              </div>
+              <InteractiveHoverButton
+                type="button"
+                className="w-full h-10 sm:h-11 text-sm sm:text-base"
+                onClick={handleGoogleSignIn}
+              >
+                Sign in with Google
+              </InteractiveHoverButton>
+              <p className="text-xs sm:text-sm text-center text-muted-foreground">
+                Don't have an account?{" "}
+                <Link to="/signup" className="text-primary hover:underline">
+                  Sign up
+                </Link>
+              </p>
+            </CardFooter>
+          </MagicCard>
+        </Card>
       </div>
     </div>
-)};
+  );
+};
 
 export default Login;
