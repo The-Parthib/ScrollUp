@@ -11,6 +11,7 @@ const App: React.FunctionComponent<IAppProps> = (props) => {
   return (
     <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
       <AuthContextProvider>
+        <h1 className="bg-amber-500">Hello</h1>
         <ModeToggle/>
         <RouterProvider router={router} />
       </AuthContextProvider>

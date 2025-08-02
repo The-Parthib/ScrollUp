@@ -1,9 +1,9 @@
 import { Button } from "@/components/ui/button";
+import { Slide, ToastContainer, toast } from "react-toastify";
 import {
   Card,
   CardContent,
   CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
@@ -36,9 +36,10 @@ const Login: React.FunctionComponent<ILoginProps> = () => {
     e.preventDefault();
     try {
       await logIn(userLogin.email, userLogin.password);
-      navigate("/");
+      navigate("/home");
       console.log(userLogin, " from sign in");
     } catch (error) {
+      toast.error("Invalid Credential");
       console.log(error);
     }
   };
@@ -47,7 +48,7 @@ const Login: React.FunctionComponent<ILoginProps> = () => {
     e.preventDefault();
     try {
       await googleSignUp();
-      navigate("/");
+      navigate("/home");
       console.log("userLogin - google", userLogin);
     } catch (error) {
       console.log(error);
@@ -59,6 +60,19 @@ const Login: React.FunctionComponent<ILoginProps> = () => {
   return (
     <div className="min-h-screen flex items-center justify-center p-4 px-4 sm:px-6 lg:px-8">
       <div className="w-full max-w-sm sm:max-w-md">
+        <ToastContainer
+          position="top-center"
+          autoClose={4000}
+          hideProgressBar={false}
+          newestOnTop
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme={theme}
+          transition={Slide}
+        />
         <Card className="shadow-lg border-0 mx-auto">
           <MagicCard
             gradientColor={theme === "dark" ? "#262626" : "#D9D9D955"}
@@ -106,19 +120,17 @@ const Login: React.FunctionComponent<ILoginProps> = () => {
                       className="h-10 sm:h-11"
                     />
                   </div>
+                  <Button
+                    type="submit"
+                    className="w-full h-10 sm:h-11 text-sm sm:text-base "
+                  >
+                    Sign In
+                  </Button>
                 </div>
               </form>
-            </CardContent>
-            <CardFooter className="p-4 sm:p-6 border-t border-border flex flex-col gap-3">
-              <Button
-                type="submit"
-                className="w-full h-10 sm:h-11 text-sm sm:text-base"
-                onClick={(e) => handleSubmit(e as any)}
-              >
-                Sign In
-              </Button>
+
               <div className="relative flex justify-center text-xs uppercase">
-                <span className="px-2 text-muted-foreground">Or</span>
+                <span className="m-3 px-2 text-muted-foreground">Or</span>
               </div>
               <InteractiveHoverButton
                 type="button"
@@ -127,13 +139,13 @@ const Login: React.FunctionComponent<ILoginProps> = () => {
               >
                 Sign in with Google
               </InteractiveHoverButton>
-              <p className="text-xs sm:text-sm text-center text-muted-foreground">
+              <p className="m-4 text-xs sm:text-sm text-center text-muted-foreground">
                 Don't have an account?{" "}
                 <Link to="/signup" className="text-primary hover:underline">
                   Sign up
                 </Link>
               </p>
-            </CardFooter>
+            </CardContent>
           </MagicCard>
         </Card>
       </div>

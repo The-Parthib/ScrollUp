@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { InteractiveHoverButton } from "@/components/magicui/interactive-hover-button";
+import { ToastContainer, toast } from "react-toastify";
 import {
   Card,
   CardContent,
@@ -44,7 +45,17 @@ const Signup: React.FunctionComponent<ISignupProps> = () => {
       navigate("/");
       console.log(userInfo, " from sign up");
     } catch (error) {
-      console.log(error);
+      toast.error("🦄 Wow so easy!", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: false,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: theme
+      });
+      console.log("hjsg",error);
     }
   };
 
@@ -64,6 +75,7 @@ const Signup: React.FunctionComponent<ISignupProps> = () => {
   return (
     <div className="min-h-screen flex items-center justify-center p-4 px-4 sm:px-6 lg:px-8">
       <div className="w-full max-w-sm sm:max-w-md">
+        <ToastContainer />
         <Card className="shadow-lg border-0 mx-auto">
           <MagicCard
             gradientColor={theme === "dark" ? "#262626" : "#D9D9D955"}
