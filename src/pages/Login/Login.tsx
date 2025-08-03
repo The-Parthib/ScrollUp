@@ -36,7 +36,7 @@ const Login: React.FunctionComponent<ILoginProps> = () => {
     e.preventDefault();
     try {
       await logIn(userLogin.email, userLogin.password);
-      navigate("/home");
+      navigate("/");
       console.log(userLogin, " from sign in");
     } catch (error) {
       toast.error("Invalid Credential");
@@ -48,7 +48,7 @@ const Login: React.FunctionComponent<ILoginProps> = () => {
     e.preventDefault();
     try {
       await googleSignUp();
-      navigate("/home");
+      navigate("/");
       console.log("userLogin - google", userLogin);
     } catch (error) {
       console.log(error);

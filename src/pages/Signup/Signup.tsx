@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { InteractiveHoverButton } from "@/components/magicui/interactive-hover-button";
-import { ToastContainer, toast } from "react-toastify";
+import { Slide, ToastContainer, toast } from "react-toastify";
 import {
   Card,
   CardContent,
@@ -45,17 +45,9 @@ const Signup: React.FunctionComponent<ISignupProps> = () => {
       navigate("/");
       console.log(userInfo, " from sign up");
     } catch (error) {
-      toast.error("🦄 Wow so easy!", {
-        position: "top-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: false,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: theme
-      });
-      console.log("hjsg",error);
+      const e = error;
+      toast.error("Invalid Credential");
+      console.log("hjsg", error);
     }
   };
 
@@ -75,7 +67,19 @@ const Signup: React.FunctionComponent<ISignupProps> = () => {
   return (
     <div className="min-h-screen flex items-center justify-center p-4 px-4 sm:px-6 lg:px-8">
       <div className="w-full max-w-sm sm:max-w-md">
-        <ToastContainer />
+        <ToastContainer
+          position="top-center"
+          autoClose={4000}
+          hideProgressBar={false}
+          newestOnTop
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme={theme}
+          transition={Slide}
+        />
         <Card className="shadow-lg border-0 mx-auto">
           <MagicCard
             gradientColor={theme === "dark" ? "#262626" : "#D9D9D955"}
@@ -141,19 +145,17 @@ const Signup: React.FunctionComponent<ISignupProps> = () => {
                       className="h-10 sm:h-11"
                     />
                   </div>
+                  <Button
+                    type="submit"
+                    className="w-full h-10 sm:h-11 text-sm sm:text-base"
+                  >
+                    Sign Up
+                  </Button>
                 </div>
               </form>
-            </CardContent>
-            <CardFooter className="p-4 sm:p-6 border-t border-border flex flex-col gap-3">
-              <Button
-                type="submit"
-                className="w-full h-10 sm:h-11 text-sm sm:text-base"
-                onClick={(e) => handleSubmit(e as any)}
-              >
-                Sign Up
-              </Button>
+
               <div className="relative flex justify-center text-xs uppercase">
-                <span className="px-2 text-muted-foreground">Or</span>
+                <span className="px-2 text-muted-foreground m-3">Or</span>
               </div>
               <InteractiveHoverButton
                 type="button"
@@ -162,13 +164,13 @@ const Signup: React.FunctionComponent<ISignupProps> = () => {
               >
                 Sign up with Google
               </InteractiveHoverButton>
-              <p className="text-xs sm:text-sm text-center text-muted-foreground">
+              <p className="text-xs m-2 sm:text-sm text-center text-muted-foreground">
                 Already have an account?{" "}
                 <Link to="/login" className="text-primary hover:underline">
                   Sign in
                 </Link>
               </p>
-            </CardFooter>
+            </CardContent>
           </MagicCard>
         </Card>
       </div>

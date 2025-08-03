@@ -1,10 +1,11 @@
-import * as React from 'react';
+import * as React from "react";
 
-interface IHomeProps {
-}
+interface IHomeProps {}
 
 const Home: React.FunctionComponent<IHomeProps> = (props) => {
-  return <div>Home</div>;
+  return (
+      <div>Home</div>
+  );
 };
 
 export default Home;

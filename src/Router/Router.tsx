@@ -18,11 +18,11 @@ export const router = createBrowserRouter(
       <Route path="/login" element={<Login />} errorElement={<Error />} />
       <Route path="/signup" element={<Signup />} errorElement={<Error />} />
 
-      <Route path="" element={<ProtectedRoutes />} errorElement={<Error />}>
-        <Route path="/home" element={<Home />} errorElement={<Error />} />
+      <Route path="/" element={<ProtectedRoutes />} errorElement={<Error />}>
+        <Route path="" element={<Home />} errorElement={<Error />} />
         <Route path="profile" element={<Profile />} errorElement={<Error />} />
         <Route
-          path="my-photos"
+          path="/my-photos"
           element={<MyPhotos />}
           errorElement={<Error />}
         />
