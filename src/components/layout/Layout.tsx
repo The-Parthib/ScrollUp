@@ -1,6 +1,6 @@
 import * as React from "react";
 import UserList from "@/components/userList/UserList";
-import Sidebar from "../sideBar/SideBar";
+import Sidebar from "../sideBar/Sidebar";
 
 interface ILayoutProps {
     children:React.ReactNode;

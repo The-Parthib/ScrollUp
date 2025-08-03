@@ -3,7 +3,7 @@ import Error from "@/pages/Error";
 import Home from "@/pages/Home";
 import Login from "@/pages/Login/Login";
 import MyPhotos from "@/pages/myPhotos";
-import CreatePost from "@/pages/Post";
+import CreatePost from "@/pages/Post/CreatePost";
 import Profile from "@/pages/Profile";
 import Signup from "@/pages/Signup/Signup";
 import {
