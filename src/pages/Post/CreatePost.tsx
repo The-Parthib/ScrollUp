@@ -7,11 +7,15 @@ import { FileUploaderMinimal } from "@uploadcare/react-uploader";
 import "@uploadcare/react-uploader/core.css";
 import * as React from "react";
 import { useTheme } from "@/context/ThemeContext";
+import { useAuthState } from "react-firebase-hooks/auth";
 
 interface ICreatePostProps {}
 
 const CreatePost: React.FunctionComponent<ICreatePostProps> = (props) => {
   const { theme } = useTheme();
+  const { user } = useAuthState();
+
+  const [fileEntry, setfileEntry] = React.useState()
 
   return (
     <div className="flex justify-center">
@@ -53,13 +57,7 @@ const CreatePost: React.FunctionComponent<ICreatePostProps> = (props) => {
                 sourceList="local, camera, gdrive"
                 filesViewMode="grid"
                 cloudImageEditorAutoOpen={true}
-                classNameUploader={
-                  theme === "light"
-                    ? "uc-light"
-                    : theme === "dark"
-                    ? "uc-dark"
-                    : "uc-purple"
-                }
+                classNameUploader={theme === "light" ? "uc-light" : "uc-dark"}
                 pubkey="105fdcb050432f1a1bed"
               />
             </div>
